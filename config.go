@@ -3,7 +3,7 @@ package main
 func init() {
 	// reassign package vars here to customize
 	batteries = []string{"BAT0"}
-	netInterfaces = []string{"wlp2s0", "enp0s25", "tun0"}
+	netInterfaces = []string{"wlp2s0", "enx00e04c012aa8", "tun0"}
 
 	// FontAwesome icons
 	icons[wifiIcon] = ""
