@@ -257,16 +257,19 @@ func batteryFmt(bats []string) string {
 }
 
 func audioStatus() string {
-	out, err := exec.Command("amixer", "get", "Master").Output()
+	//out, err := exec.Command("amixer", "get", "Master").Output()
+        out, err := exec.Command("bash", "-c", "pacmd list-sinks|grep -A 15 '* index'| awk '/volume: front/{ print $5 }'").Output()
 	if err != nil {
 		return icons[unknownIcon]
 	}
-	match := amixerRE.FindSubmatch(out)
-	if len(match) < 1 {
+	//match := amixerRE.FindSubmatch(out)
+	//if len(match) < 1 {
+        if len(out) < 1 {
 		return icons[unknownIcon]
 	}
 	isMuted := false
-	return audioFormat(string(match[0]), isMuted)
+	//return audioFormat(string(match[0]), isMuted)
+        return audioFormat(string(out[:len(out)-1]), isMuted)
 }
 
 func audioFmt(vol string, isMuted bool) string {
@@ -484,7 +487,7 @@ func keyboardEventHandler(x *xgb.Conn, root xproto.Window) {
 
 		keycode := split[len(split)-2]
 
-		if keycode == "108" {
+		if keycode == "64" {
 			if action == "press" {
 				showDetails = true
 
